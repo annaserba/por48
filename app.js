@@ -2,63 +2,31 @@
   'use strict';
 
   var C = window.HOUSE_CONFIG || {};
-  var MAX_PROFILE = C.maxProfile || '';
-  var SHARE_BASE = C.shareBase || 'https://max.ru/:share?text=';
+  var BOT_URL = C.botUrl || 'https://max.ru/se14972607_1_bot';
+  var BOT_PAGE = C.botPage || 'https://annaserba.ru/bot/';
+  var API_URL = C.apiUrl || 'https://bi.annaserba.ru/por48-api/apply';
 
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
 
-  function toast(message) {
-    var el = $('[data-toast]');
-    if (!el) return;
-    el.textContent = message;
-    el.classList.add('is-visible');
-    window.clearTimeout(toast._t);
-    toast._t = window.setTimeout(function () { el.classList.remove('is-visible'); }, 3200);
-  }
-
-  function copyText(text) {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      return navigator.clipboard.writeText(text).then(function () { return true; }, function () { return fallbackCopy(text); });
-    }
-    return Promise.resolve(fallbackCopy(text));
-  }
-
-  function fallbackCopy(text) {
-    var ta = document.createElement('textarea');
-    ta.value = text;
-    ta.setAttribute('readonly', '');
-    ta.style.position = 'fixed';
-    ta.style.left = '-9999px';
-    document.body.appendChild(ta);
-    ta.select();
-    var ok = false;
-    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
-    document.body.removeChild(ta);
-    return ok;
-  }
-
-  /* Ссылки на страницу бота */
-  var BOT_URL = C.botUrl || 'https://annaserba.ru/bot/';
-  $$('[data-botpage]').forEach(function (link) {
+  /* Ссылки на бота заявок и на страницу бота о свете */
+  $$('[data-bot]').forEach(function (link) {
     link.href = BOT_URL;
-  });
-
-  /* Ссылки на MAX */
-  $$('[data-max]').forEach(function (link) {
-    if (MAX_PROFILE) link.href = MAX_PROFILE;
     link.target = '_blank';
     link.rel = 'noopener';
+  });
+  $$('[data-botpage]').forEach(function (link) {
+    link.href = BOT_PAGE;
   });
 
   var form = $('#join');
   var formView = $('[data-form-view]');
   var success = $('[data-success]');
-  var successLead = $('[data-success-lead]');
-  var msgEl = $('[data-message]');
-  var shareLink = $('[data-share-link]');
   var successTitle = $('[data-success-title]');
-  var currentMessage = '';
+  var submitBtn = $('[data-submit]');
+  var submitError = $('[data-submit-error]');
+  var submitLabel = submitBtn ? submitBtn.innerHTML : '';
+  var sending = false;
 
   /* ---------- Телефон ---------- */
 
@@ -83,6 +51,7 @@
       var next = formatPhone(phone.value);
       if (phone.value !== next) phone.value = next;
       clearError('phone');
+      hideSubmitError();
     });
   }
 
@@ -110,6 +79,17 @@
     inputs.forEach(function (input) { input.removeAttribute('aria-invalid'); });
   }
 
+  function showSubmitError(message) {
+    if (!submitError) return;
+    submitError.textContent = message;
+    submitError.hidden = false;
+  }
+  function hideSubmitError() {
+    if (!submitError) return;
+    submitError.hidden = true;
+    submitError.textContent = '';
+  }
+
   /* ---------- Выбор варианта ---------- */
 
   function syncChoices() {
@@ -124,12 +104,14 @@
       input.addEventListener('change', function () {
         syncChoices();
         clearError(input.name);
+        hideSubmitError();
       });
     });
 
     $$('input', form).forEach(function (input) {
       input.addEventListener('input', function () {
         if (input.type !== 'radio' && input.type !== 'checkbox') clearError(input.name);
+        hideSubmitError();
       });
       input.addEventListener('change', function () {
         if (input.type === 'checkbox') clearError(input.name);
@@ -137,7 +119,7 @@
     });
   }
 
-  /* ---------- Валидация и сообщение ---------- */
+  /* ---------- Валидация ---------- */
 
   function readForm() {
     var name = $('#name') ? $('#name').value.trim() : '';
@@ -171,37 +153,24 @@
       house: house.value,
       status: status.value,
       phone: formatPhone(phoneValue).replace(/\s+/g, ' '),
-      message: ''
+      consent: true
     };
   }
 
-  function buildMessage(data) {
-    return [
-      'Здравствуйте, Анна! Заявка в чат дома «ПОР 48 и 48/1».',
-      '',
-      'Дом: ' + data.house,
-      'Статус: ' + data.status.toLowerCase(),
-      'Имя: ' + data.name,
-      'Телефон: ' + data.phone,
-      '',
-      'Прошу добавить в чат дома.'
-    ].join('\n');
+  /* ---------- Отправка ---------- */
+
+  function setSending(value) {
+    sending = value;
+    if (!submitBtn) return;
+    submitBtn.disabled = value;
+    submitBtn.classList.toggle('is-loading', value);
+    submitBtn.innerHTML = value ? 'Отправляю…' : submitLabel;
   }
 
-  function showSuccess(message, shareUrl, blocked) {
-    currentMessage = message;
+  function showSuccess() {
+    hideSubmitError();
     if (formView) formView.hidden = true;
-    if (form) form.hidden = true;
     if (success) success.hidden = false;
-    if (msgEl) msgEl.textContent = message;
-    if (shareLink) shareLink.href = shareUrl;
-    if (successLead) {
-      successLead.textContent = blocked
-        ? 'Браузер заблокировал вкладку. Текст уже скопирован — нажмите «Открыть MAX» и выберите чат Анны.'
-        : 'MAX открывается в новой вкладке. Выберите чат Анны и отправьте сообщение. Если вкладка не открылась — нажмите кнопку ниже.';
-    }
-
-    // Максимально честно: если вкладку заблокировали, кнопка рядом.
     var card = $('.form-card');
     if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     if (successTitle) window.setTimeout(function () { successTitle.focus({ preventScroll: true }); }, 350);
@@ -210,42 +179,58 @@
   if (form) {
     form.addEventListener('submit', function (event) {
       event.preventDefault();
+      if (sending) return;
+
+      hideSubmitError();
       var data = readForm();
       if (!data) return;
 
-      var message = buildMessage(data);
-      var shareUrl = SHARE_BASE + encodeURIComponent(message);
+      setSending(true);
+      var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      var timer = controller ? window.setTimeout(function () { controller.abort(); }, 15000) : null;
 
-      var win = null;
-      try { win = window.open(shareUrl, '_blank'); } catch (e) { win = null; }
-      if (win) win.opener = null;
-
-      copyText(message);
-      showSuccess(message, shareUrl, !win);
-
-      if (!win) {
-        toast('Браузер заблокировал вкладку — нажмите «Открыть MAX»');
-      }
-    });
-  }
-
-  /* ---------- Кнопки в блоке успеха ---------- */
-
-  var copyBtn = $('[data-copy]');
-  if (copyBtn) {
-    copyBtn.addEventListener('click', function () {
-      copyText(currentMessage).then(function (ok) {
-        toast(ok ? 'Текст скопирован' : 'Не получилось скопировать — выделите текст вручную');
+      fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        signal: controller ? controller.signal : undefined,
+        credentials: 'omit'
+      }).then(function (response) {
+        return response.json().catch(function () { return {}; }).then(function (body) {
+          return { response: response, body: body };
+        });
+      }).then(function (result) {
+        if (result.response.ok && result.body && result.body.ok) {
+          showSuccess();
+          return;
+        }
+        if (result.response.status === 429) {
+          throw new Error('Слишком много заявок подряд. Подождите немного и попробуйте снова.');
+        }
+        if (result.response.status === 503) {
+          throw new Error('Заявки временно не принимаются. Напишите в бот заявок — ссылка в шапке.');
+        }
+        throw new Error('Не получилось отправить заявку. Проверьте связь и попробуйте ещё раз.');
+      }).catch(function (error) {
+        var message = error && error.name === 'AbortError'
+          ? 'Сервер не ответил. Проверьте связь и попробуйте ещё раз.'
+          : (error && error.message) || 'Не получилось отправить заявку. Попробуйте ещё раз.';
+        showSubmitError(message);
+        if (submitError) submitError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }).then(function () {
+        if (timer) window.clearTimeout(timer);
+        setSending(false);
       });
     });
   }
+
+  /* ---------- Изменить данные ---------- */
 
   var editBtn = $('[data-edit]');
   if (editBtn) {
     editBtn.addEventListener('click', function () {
       if (success) success.hidden = true;
       if (formView) formView.hidden = false;
-      if (form) form.hidden = false;
       var card = $('.form-card');
       if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
       var name = $('#name');

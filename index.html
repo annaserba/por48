@@ -7,21 +7,21 @@
 <meta name="description" content="Страница дома ПОР 48 и 48/1: заявка на добавление в чат дома в MAX. Укажите дом, собственник или нет, имя и телефон — Анна добавит вас в чат.">
 <meta name="robots" content="noindex, follow">
 <meta name="theme-color" content="#fbf9f6">
-<link rel="canonical" href="https://por48.annaserba.ru/">
+<link rel="canonical" href="http://por48.annaserba.ru/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ПОР 48 и 48/1">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:title" content="ПОР 48 и 48/1 — чат дома в MAX">
 <meta property="og:description" content="Два дома, один чат. Заполните короткую заявку — и Анна добавит вас в чат дома в MAX.">
-<meta property="og:url" content="https://por48.annaserba.ru/">
-<meta property="og:image" content="https://por48.annaserba.ru/og.jpg">
+<meta property="og:url" content="http://por48.annaserba.ru/">
+<meta property="og:image" content="http://por48.annaserba.ru/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ПОР 48 и 48/1 — чат дома в MAX">
 <meta name="twitter:description" content="Два дома, один чат. Заполните короткую заявку — и Анна добавит вас в чат дома в MAX.">
-<meta name="twitter:image" content="https://por48.annaserba.ru/og.jpg">
+<meta name="twitter:image" content="http://por48.annaserba.ru/og.jpg">
 
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="avatar.jpg">
@@ -45,7 +45,7 @@
       <a class="top__link" href="#about">О чате</a>
       <a class="top__link" href="#rules">Правила</a>
       <a class="top__link" data-botpage href="https://annaserba.ru/bot/">Бот</a>
-      <a class="btn btn--grad btn--sm" data-max href="https://max.ru/u/f9LHodD0cOIubP-rKRIp_5v0es8kxPV0D4qFwUFOSbvSWe2Kp9kLizIqd-Y" target="_blank" rel="noopener">Написать в MAX <span aria-hidden="true">↗</span></a>
+      <a class="btn btn--grad btn--sm" data-bot href="https://max.ru/se14972607_1_bot" target="_blank" rel="noopener">Бот заявок <span aria-hidden="true">↗</span></a>
     </div>
   </div>
 </header>
@@ -66,7 +66,7 @@
             <b>Анна</b>
             <span>администратор чата</span>
           </span>
-          <a class="person__link" data-max href="https://max.ru/u/f9LHodD0cOIubP-rKRIp_5v0es8kxPV0D4qFwUFOSbvSWe2Kp9kLizIqd-Y" target="_blank" rel="noopener">Написать <span aria-hidden="true">↗</span></a>
+          <a class="person__link" data-bot href="https://max.ru/se14972607_1_bot" target="_blank" rel="noopener">Бот заявок <span aria-hidden="true">↗</span></a>
         </div>
 
         <ul class="trust" aria-label="Коротко о чате">
@@ -145,10 +145,11 @@
               <p class="field__error" data-error="consent" aria-live="polite"></p>
             </div>
 
-            <button class="btn btn--grad btn--block btn--xl" type="submit">Отправить заявку в MAX <span aria-hidden="true">↗</span></button>
-            <p class="form__note">Откроется MAX с готовым текстом. Выберите чат Анны и отправьте сообщение.</p>
+            <p class="form__error" data-submit-error hidden role="alert"></p>
+            <button class="btn btn--grad btn--block btn--xl" type="submit" data-submit>Отправить заявку <span aria-hidden="true">↗</span></button>
+            <p class="form__note">Заявка уйдёт Анне в MAX. Её увидит только она.</p>
             <noscript>
-              <p class="form__note">Для отправки заявки нужен JavaScript. Напишите Анне напрямую в MAX — ссылка в шапке страницы.</p>
+              <p class="form__note">Для отправки заявки нужен JavaScript. Напишите в бот заявок — ссылка в шапке страницы.</p>
             </noscript>
           </form>
           </div>
@@ -157,14 +158,11 @@
             <span class="success__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
             </span>
-            <h2 tabindex="-1" data-success-title>Заявка готова</h2>
-            <p data-success-lead>MAX открывается в новой вкладке. Выберите чат Анны и отправьте сообщение. Если вкладка не открылась — нажмите кнопку ниже.</p>
+            <h2 tabindex="-1" data-success-title>Заявка отправлена</h2>
+            <p data-success-lead>Анна получит её в MAX и добавит вас в чат — обычно в течение дня. Если нужно что-то уточнить, напишите в бот заявок.</p>
             <div class="success__actions">
-              <a class="btn btn--grad" data-share-link href="#" target="_blank" rel="noopener">Открыть MAX</a>
-              <a class="btn btn--ghost" data-max href="https://max.ru/u/f9LHodD0cOIubP-rKRIp_5v0es8kxPV0D4qFwUFOSbvSWe2Kp9kLizIqd-Y" target="_blank" rel="noopener">Чат Анны</a>
-              <button class="btn btn--ghost" type="button" data-copy>Скопировать текст</button>
+              <a class="btn btn--ghost" data-bot href="https://max.ru/se14972607_1_bot" target="_blank" rel="noopener">Открыть бот заявок</a>
             </div>
-            <pre class="success__message" data-message></pre>
             <button class="link" type="button" data-edit>Изменить данные</button>
           </div>
         </div>
@@ -239,8 +237,8 @@
         </li>
         <li>
           <span class="steps__num">2</span>
-          <h3>Отправьте в MAX</h3>
-          <p>Откроется MAX с готовым текстом. Выберите чат Анны и отправьте сообщение.</p>
+          <h3>Отправьте заявку</h3>
+          <p>Нажмите кнопку — заявка сразу уйдёт Анне в MAX. Ничего копировать не нужно.</p>
         </li>
         <li>
           <span class="steps__num">3</span>
@@ -274,8 +272,8 @@
       <div class="faq__head">
         <p class="kicker">Вопросы</p>
         <h2>Коротко</h2>
-        <p class="sec-head__lead">Не нашли ответ — напишите мне в MAX, отвечу лично.</p>
-        <a class="btn btn--grad" data-max href="https://max.ru/u/f9LHodD0cOIubP-rKRIp_5v0es8kxPV0D4qFwUFOSbvSWe2Kp9kLizIqd-Y" target="_blank" rel="noopener">Написать Анне <span aria-hidden="true">↗</span></a>
+        <p class="sec-head__lead">Не нашли ответ — напишите в бот заявок, я отвечу лично.</p>
+        <a class="btn btn--grad" data-bot href="https://max.ru/se14972607_1_bot" target="_blank" rel="noopener">Бот заявок <span aria-hidden="true">↗</span></a>
       </div>
 
       <div class="faq__list">
@@ -293,15 +291,15 @@
         </details>
         <details>
           <summary>Кто увидит мой номер?<span class="faq__plus" aria-hidden="true"></span></summary>
-          <p>Только я. В чате номер не публикуется, третьим лицам не передаю. Сайт ничего не сохраняет: сообщение уходит из вашего MAX. Подробнее — <a href="privacy.html">в политике обработки данных</a>.</p>
+          <p>Только я. В чате номер не публикуется, третьим лицам не передаю. Заявка передаётся на защищённый сервер и сразу уходит мне в MAX; сервер не хранит имя и телефон. Подробнее — <a href="privacy.html">в политике обработки данных</a>.</p>
         </details>
         <details>
-          <summary>MAX не открывается — что делать?<span class="faq__plus" aria-hidden="true"></span></summary>
-          <p>Напишите мне напрямую по ссылке <a data-max href="https://max.ru/u/f9LHodD0cOIubP-rKRIp_5v0es8kxPV0D4qFwUFOSbvSWe2Kp9kLizIqd-Y" target="_blank" rel="noopener">max.ru/u/…</a> или установите MAX и попробуйте снова.</p>
+          <summary>Заявка не отправилась — что делать?<span class="faq__plus" aria-hidden="true"></span></summary>
+          <p>Проверьте связь и попробуйте ещё раз. Если не получается — напишите в <a data-bot href="https://max.ru/se14972607_1_bot" target="_blank" rel="noopener">бот заявок</a>, я помогу.</p>
         </details>
         <details>
           <summary>Кто администратор?<span class="faq__plus" aria-hidden="true"></span></summary>
-          <p>Анна. Я живу в ПОР 48/1 и веду чат дома. Связаться — <a data-max href="https://max.ru/u/f9LHodD0cOIubP-rKRIp_5v0es8kxPV0D4qFwUFOSbvSWe2Kp9kLizIqd-Y" target="_blank" rel="noopener">в MAX</a>.</p>
+          <p>Анна. Я живу в ПОР 48/1 и веду чат дома. Связаться — в <a data-bot href="https://max.ru/se14972607_1_bot" target="_blank" rel="noopener">боте заявок</a>.</p>
         </details>
       </div>
     </div>
@@ -313,7 +311,7 @@
         <summary>Что будет с моими данными?<span class="faq__plus" aria-hidden="true"></span></summary>
         <div class="privacy__body">
           <p>Имя, дом и телефон вижу только я, Анна. Они нужны, чтобы добавить вас в чат дома и связаться по заявке. Я не публикую номер в чате и не передаю его третьим лицам.</p>
-          <p>Сайт не хранит данные: сообщение формируется в вашем браузере и уходит из вашего MAX. Удалить данные — напишите мне в MAX. Полная информация — <a href="privacy.html">в политике обработки данных</a>.</p>
+          <p>Сайт передаёт заявку на защищённый сервер, который сразу отправляет её мне в MAX и не сохраняет имя и телефон. Удалить данные — напишите в бот заявок. Полная информация — <a href="privacy.html">в политике обработки данных</a>.</p>
         </div>
       </details>
     </div>

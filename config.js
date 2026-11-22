@@ -3,15 +3,15 @@ window.HOUSE_CONFIG = {
   houseName: 'ПОР 48 и 48/1',
   adminName: 'Анна',
 
-  /* Личный профиль Анны в MAX — кнопки «Написать в MAX» */
-  maxProfile: 'https://max.ru/u/f9LHodD0cOIubP-rKRIp_5v0es8kxPV0D4qFwUFOSbvSWe2Kp9kLizIqd-Y',
+  /* Публичный бот заявок (создать в @MasterBot, подставить username) */
+  botUrl: 'https://max.ru/se14972607_1_bot',
 
-  /* Официальный диплинк MAX: экран «Отправить в MAX» с готовым текстом */
-  shareBase: 'https://max.ru/:share?text=',
+  /* Страница бота о свете — для блока «Бот дома» */
+  botPage: 'https://annaserba.ru/bot/',
 
-  /* Страница бота. После DNS: https://bot.annaserba.ru/ */
-  botUrl: 'https://annaserba.ru/bot/',
+  /* API заявок на VPS (nginx -> por48-join-bot) */
+  apiUrl: 'https://bi.annaserba.ru/por48-api/apply',
 
   privacyUrl: 'privacy.html',
-  siteUrl: 'https://por48.annaserba.ru/'
+  siteUrl: 'http://por48.annaserba.ru/'
 };
