@@ -7,7 +7,7 @@ window.HOUSE_CONFIG = {
   botUrl: 'https://max.ru/se14972607_1_bot',
 
   /* Страница бота о свете — для блока «Бот дома» */
-  botPage: 'https://annaserba.ru/bot/',
+  botPage: 'http://por48.annaserba.ru/bot/',
 
   /* API заявок на VPS (nginx -> por48-join-bot) */
   apiUrl: 'https://bi.annaserba.ru/por48-api/apply',
