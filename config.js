@@ -9,6 +9,9 @@ window.HOUSE_CONFIG = {
   /* Официальный диплинк MAX: экран «Отправить в MAX» с готовым текстом */
   shareBase: 'https://max.ru/:share?text=',
 
+  /* Страница бота. После DNS: https://bot.annaserba.ru/ */
+  botUrl: 'https://annaserba.ru/bot/',
+
   privacyUrl: 'privacy.html',
   siteUrl: 'https://por48.annaserba.ru/'
 };

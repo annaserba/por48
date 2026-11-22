@@ -38,6 +38,12 @@
     return ok;
   }
 
+  /* Ссылки на страницу бота */
+  var BOT_URL = C.botUrl || 'https://annaserba.ru/bot/';
+  $$('[data-botpage]').forEach(function (link) {
+    link.href = BOT_URL;
+  });
+
   /* Ссылки на MAX */
   $$('[data-max]').forEach(function (link) {
     if (MAX_PROFILE) link.href = MAX_PROFILE;
